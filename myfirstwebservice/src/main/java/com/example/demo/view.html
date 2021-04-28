@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Person Information</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+        function searchPerson() {
+            var personId = $("#idTxt").val();     
+           
+            $(document).ready(function() {
+                
+                $.ajax({
+                    url: "http://localhost:8080/record/person/"+personId,
+                    type: "GET",                
+                    success: function (result) {                    
+                        $("#nameLbl").text(result.name);
+                        $("#lastNameLbl").text(result.lastName);
+                        $("#addressLbl").text(result.address);
+                        
+                        console.log(result)
+                    },
+                    error: function(error) {
+                  
+                        console.log(error);
+                    }
+                })
+            })
+        }
+</script>
+
+</head>
+<body>
+    <h1>View Record Information</h1>
+
+    <b>Insert Your ID:</b> <input type="text" id="idTxt"></input>
+                    <input type="button" value="Search Record" id="searchBtn" onclick="searchPerson()"></input>
+
+    <div>Results</div>
+    <div>
+        <b>Name:</b> <label id="nameLbl"></label>
+    </div>
+    <div>
+        <b>FirstName:</b> <label id="lastNameLbl"></label>
+    </div>
+    <div>
+        <b>Address:</b> <label id="addressLbl"></label>
+    </div>
+
+</body>
+</html>

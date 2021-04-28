@@ -1,0 +1,10 @@
+com.example.demo
+com.example.demo.config
+com.example.demo.controller
+com.example.demo.controller.model
+com.example.demo.dao
+com.example.demo.entity
+com.example.demo.exception
+com.example.demo.model
+com.example.demo.repo
+com.example.demo.service
