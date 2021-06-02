@@ -2,14 +2,17 @@ package com.example.demo.dao;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.controller.model.MessageType;
+import com.example.demo.entity.Bank;
 import com.example.demo.entity.Person;
 import com.example.demo.exception.CustomException;
+import com.example.demo.repo.BankRepo;
 import com.example.demo.repo.PersonRepo;
 
 /**
@@ -25,6 +28,7 @@ public class PersonDAOImpl {
 	
 	@Autowired   //widely used for Dependency Injection
 	PersonRepo personRepo;
+	BankRepo bankRepo;
 	
 	//Read
 	public Person getPersonInfo(int id) throws Exception {
@@ -71,6 +75,15 @@ public class PersonDAOImpl {
 		
 		if(person != null) {
 			personRepo.delete(person);
+			//flag bank record as INACTIVE
+			Set<Bank> banks = person.getBank();
+			
+			if(!banks.isEmpty()) {
+				for(Bank bank : banks) {
+					bank.setStatus("INACTIVE");
+				}
+				bankRepo.saveAll(banks);
+			}
 			message = "Deleted successfully.";
 		}else {
 			message = "Unsuccessful deletion.";

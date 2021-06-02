@@ -28,7 +28,7 @@ public class Person implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     
-    @OneToMany(mappedBy= "person")
+    @OneToMany(mappedBy= "person", orphanRemoval = false)
     @JsonIgnoreProperties(value = "person")
     private Set<Bank> bank;
 

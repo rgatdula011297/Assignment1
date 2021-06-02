@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        body{
+            background: url("sakura.jpg");
+            background-size: cover;
+          }
+          </style>
 <meta charset="ISO-8859-1">
 <title>Person Information</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -58,9 +64,7 @@ function savePerson() {
                      
     <div>Results</div>
     <form>
-     <div>
-        <b>ID:</b> <input type="text" id="insertId"></input>
-    </div>
+     
     <div>
         <b>Name:</b> <input type="text" id="insertnameLbl"></input>
     </div>
@@ -70,7 +74,7 @@ function savePerson() {
     <div>
         <b>Address:</b> <input type="text" id="insertaddressLbl"></input>
     </div>
-<input type="button" value="Update Record" id="saveBtn" onclick="savePerson()"></input>
+<input type="button" value="Insert Record" id="saveBtn" onclick="savePerson()"></input>
 </form>
 </body>
 </html>

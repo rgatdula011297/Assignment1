@@ -1,51 +1,118 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+    body{
+        background: url("sakura.jpg");
+        background-size: cover;
+      }
+      </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="banky.js"></script>
+<script type="text/javascript">
+        function clearTxt(){
+                        $("#nameLbl").text("");
+                        $("#lastNameLbl").text("");
+                        $("#addressLbl").text("");
+                        $("#accountNameLbl").text(""); 
+                        $("#bankAddressLbl").text(""); 
+                        $("#idTxt").val(""); 
+        }
+</script>
+
+<!- GET PERSON-->
+
 <meta charset="ISO-8859-1">
 <title>Person Information</title>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript">
-        function searchPerson() {
-            var personId = $("#idTxt").val();     
+function searchBank(){
+  var personId = $("#idTxt").val();   
+  window.open("bank.html?id="+personId,"_blank")
+}
+        function searchPerson(){
+            var personId = $("#idTxt").val();    
+            
            
             $(document).ready(function() {
                 
                 $.ajax({
                     url: "http://localhost:8080/record/person/"+personId,
                     type: "GET",                
-                    success: function (result) {                    
+                    success: function (result) {   
                         $("#nameLbl").text(result.name);
                         $("#lastNameLbl").text(result.lastName);
                         $("#addressLbl").text(result.address);
-                        
+                        $("#accountNameLbl").text(result.bank[0].accountName);  $("#bankAddressLbl").text(result.bank[0].bankAddress); 
                         console.log(result)
+                        /* for (i in result.bank){
+                            x +=result.bank[i] +"<br>";
+                        }
+                        document.getElementById("demo").innerHTML=x;
+                       */
                     },
+
                     error: function(error) {
-                  
+                        $("#nameLbl").text("");
+                        $("#lastNameLbl").text("");
+                        $("#addressLbl").text("");
+                        $("#accountNameLbl").text(""); 
+                        $("#bankAddressLbl").text(""); 
+                        $("#idTxt").val(""); 
+                        return window.alert("Plese enter an existing ID!")
+                       
                         console.log(error);
+                        
+                        
                     }
+                
                 })
             })
+            
         }
 </script>
 
 </head>
 <body>
-    <h1>View Record Information</h1>
-
-    <b>Insert Your ID:</b> <input type="text" id="idTxt"></input>
-                    <input type="button" value="Search Record" id="searchBtn" onclick="searchPerson()"></input>
-
-    <div>Results</div>
-    <div>
-        <b>Name:</b> <label id="nameLbl"></label>
+    
+<!- DATA FIELDS-->
+<div class="container-fluid my-3">
+    <div class="col-md-12 p-4 text-center">
+    
+    <hr>
+    <div><h2><b>Person Information</b></h2></div>
     </div>
+    </div>
+    <div class="container-fluid my-3">
+      <div class="col-md-12 p-2 text-center">
+    <b>Insert Your ID:</b> <input type="text" placeholder="Person ID" id="idTxt" ></input>
+                    <input class="btn btn-info" type="button" value="Search Record" id="searchBtn" onclick="searchPerson()">
+                    <button class="btn btn-info" onclick="searchBank()">View Bank Data</button>
+    </div>
+    </div>
+  </div>
+    <element class="label">
+      
     <div>
-        <b>FirstName:</b> <label id="lastNameLbl"></label>
+        <b>First Name:</b> <label id="nameLbl"></label>
+    </div>
+
+    <div>
+        <b>Last Name:</b> <label id="lastNameLbl"></label>
     </div>
     <div>
         <b>Address:</b> <label id="addressLbl"></label>
     </div>
+</element>
+    <div class="col-md-12 p-3 text-center">
+    <div>
+        <input class="btn btn-info" type="button" value="Refresh" id="clrBtn" onclick="clearTxt()">
+</div>
 
+</div>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 import java.io.Serializable;
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,6 +38,15 @@ public class Bank implements Serializable {
 	@Column
 	private String bankAddress;
 	
+	@Column
+	private String status = "ACTIVE";
+	
+	@Column
+	private String branchName;
+	
+	@Column
+	private BigDecimal totalBalance;
+	
 	@ManyToOne
 	@JoinColumn(name= "personId")
 	private Person person;
@@ -54,6 +65,24 @@ public class Bank implements Serializable {
 	 */
 	public int getId() {
 		return id;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getBranchName() {
+		return branchName;
+	}
+	public void setBranchName(String branchName) {
+		this.branchName = branchName;
+	}
+	public BigDecimal getTotalBalance() {
+		return totalBalance;
+	}
+	public void setTotalBalance(BigDecimal totalBalance) {
+		this.totalBalance = totalBalance;
 	}
 	/**
 	 * Setter for Id

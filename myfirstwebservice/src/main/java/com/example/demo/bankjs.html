@@ -1,0 +1,135 @@
+var bankList = [];
+var personBankData = {};
+    
+    
+    function GetBankData(_id){
+        $.ajax({
+            url: "http://localhost:8080/record/person/" + _id,
+            type: "GET", 
+            contentType: "application/json",
+            success: function (result) {
+                console.log(result);
+                var personBank = result.bank;
+                personBankData = result;
+                bankList = result.bank;
+                console.log(bankList);
+                if(personBank != null){
+                    $('#lblName').text(result.name + ' ' + result.lastName);
+                    personBank.forEach(b => {
+                        
+                        var column1 = '<td class=\"column1\"><input type=\"radio\" name=\"bankid\" value = \"' + b.id + '\"/></td>';
+                        var column2 = '<td class=\"column2\">' + b.bankAddress + '</td>';
+                        var column3 = '<td class=\"column3\">' + b.branchName + '</td>';
+                        var column4 = '<td class=\"column4\">' + b.totalBalance + '</td>';
+                        var column5 = "";
+                        var badgeValue = "";
+                        switch(b.status){
+                            case "active":
+                                badgeValue = "badge-success";
+                                break;
+                            case "inactive":
+                                badgeValue = "badge-warning";
+                                break;
+                            default: 
+                                badgeValue = "badge-success";
+                                break; 
+    
+                        }
+                        column5 = '<td class=\"column5\"><span class=\"badge ' + badgeValue + '\">' + b.status + '</span></td>';
+                        var column6 = '<td class=\"column6\">' + b.accountName + '</td>';
+                        var content = column1 + column6 + column2 + column3 + column4 + column5;
+                       $('#datatable > tbody').append('<tr>' + content + '</tr>');
+                    });
+                }
+            }
+        });
+    }
+    
+    $(function(){ 
+        
+        var bankId = 0;
+    
+       
+        console.log(window.location.search);
+        var idParams = new URLSearchParams(window.location.search);
+        var id = idParams.get('id');
+        console.log(id);
+        GetBankData(id);
+    
+        
+        $('#BtnActivate').click(function(){
+            bankId = $("input[name='bankid']:checked").val()
+    
+            var bankObj;
+    
+            bankList.forEach(b => {
+                if(b.id == bankId){
+                    bankObj = b;
+                }
+            });
+    
+            bankObj.status = "active";
+            bankObj['person'] = {
+                "id" : personBankData.id
+            };
+            console.log('this is bankobj');
+            console.log(bankObj);
+            
+            $.ajax({
+                url: "http://localhost:8080/bankrecord/bank",
+                type: "PUT",
+                data: JSON.stringify(bankObj),
+                contentType: "application/json",
+                success: function (result) {
+                    console.log(result);
+                    alert("Account successfully activated");
+                    $('#datatable > tbody > tr').remove();
+                    GetBankData(id);
+                    $("input[name='bankid']:checked > ")
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });      
+        });
+    
+        $('#BtnDeactivate').click(function(){
+            bankId = $("input[name='bankid']:checked").val()
+    
+            var bankObj;
+    
+            bankList.forEach(b => {
+                if(b.id == bankId){
+                    bankObj = b;
+                }
+            });
+    
+            bankObj.status = "inactive";
+            bankObj['person'] = {
+                "id" : personBankData.id
+            };
+            console.log('this is bankobj');
+            console.log(bankObj);
+            
+            $.ajax({
+                url: "http://localhost:8080/bankrecord/bank",
+                type: "PUT",
+                data: JSON.stringify(bankObj),
+                contentType: "application/json",
+                success: function (result) {
+                    console.log(result);
+                    alert("Account successfully deactivated");
+                    $('#datatable > tbody > tr').remove();
+                    GetBankData(id);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+    
+        });
+    
+        $('#BtnTransfer').click(function(){
+            alert('Successfully clicked transfer!');
+        });
+    });

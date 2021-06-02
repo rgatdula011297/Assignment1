@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+        body{
+            background: url("sakura.jpg");
+            background-size: cover;
+          }
+          </style>
+    <title>Table</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!--===============================================================================================-->
+  </head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="banky.js"></script>
+   
+
+
+  <body>
+    <div class="maxwidth">
+      <div class="container-table">
+        <h1 class="text-lg">Accounts</h1>
+        <h5 class="mb-3 mt-1 text-xs">
+          NAME:&nbsp;&nbsp;<span class="text-gray uppercase" id="lblName">
+          </span>
+        </h5>
+        <h4 class="py-1 text-gray">Bank Information</h4>
+        <div class="wrap-table">
+          <div class="table layout m-b-110">
+            <div class="table-head">
+              <table>
+                <thead>
+                  <tr class="head">
+                    <th class="column1"></th>
+                    <th class="column6">Account Name</th>
+                    <th class="column2">Bank Address</th>
+                    <th class="column3">Branch</th>
+                    <th class="column4">Balance</th>
+                    <th class="column5">Status</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+
+            <div class="table-body">
+              <table id="datatable">
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="my-2">
+          
+        </div>
+      </div>
+    </div>
+
+    <!--===============================================================================================-->
+    
+
+  </body>
+</html>

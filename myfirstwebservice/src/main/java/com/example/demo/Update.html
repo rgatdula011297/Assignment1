@@ -1,75 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        body{
+            background: url("sakura.jpg");
+            background-size: cover;
+          }
+          </style>
 <meta charset="ISO-8859-1">
 <title>Person Information</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript">
-	
-	function updatePerson() {
-            var personId = $("#updateId").val(); 
-            var Name = $("#updatenameLbl").val();
-            var Lastname = $("#updatelastNameLbl").val();
-            var Address =  $("#updateaddressLbl").val();
-           
-            $(document).ready(function() {
-            	let myData = {
-                        "id": personId,
-                        "name":Name,
-                        "lastName": Lastname,
-                        "address": Address,
-                    };
 
-  
-                $.ajax({
-                	statusCode: {
-                		500: function(result) {
-                			alert(result.responseText)
-                		},
-                		400: function(result) {
-                			alert(result.responseText)
-                		}
-                	},
-                    url: "http://localhost:8080/record/person/",
-                    type: "PUT", 
-                    data: JSON.stringify(myData),
-                    contentType: "application/json",
-                    success: function (result) { 
-                    	
-                       alert("Update Success!");
-                       searchPerson();
-                        
-                        
-                        console.log(result)
-                    },
-                    error: function(error) {
-                  
-                        console.log(error);
-                    }
-                })
-            })
-        }
-        
+function savePerson() {
+	var personId = $("#insertId").val(); 
+    var Name = $("#insertnameLbl").val();
+    var Lastname = $("#insertlastNameLbl").val();
+    var Address =  $("#insertaddressLbl").val();
+   
+    $(document).ready(function() {
+    	let myData = {
+                "id": personId,
+                "name":Name,
+                "lastName": Lastname,
+                "address": Address,
+            };
+
+
+        $.ajax({
+        	statusCode: {
+        		500: function(result) {
+        			alert(result.responseText)
+        		},
+        		400: function(result) {
+        			alert(result.responseText)
+        		}
+        	},
+            url: "http://localhost:8080/record/person/",
+            type: "POST", 
+            data: JSON.stringify(myData),
+            contentType: "application/json",
+            success: function (result) { 
+            	
+               alert("Insert Success!");
+               searchPerson();
+                
+                
+                console.log(result)
+            },
+            error: function(error) {
+          
+                console.log(error);
+            }
+        })
+    })
+}
+
 </script>
+
 </head>
 <body>
-<h1>Update Record Information</h1>
+ <h1>Update Record</h1>
                      
     <div>Results</div>
     <form>
-     <div>
-        <b>ID:</b> <input type="text" id="updateId"></input>
+     
+    <div>
+        <b>Name:</b> <input type="text" id="insertnameLbl"></input>
     </div>
     <div>
-        <b>Name:</b> <input type="text" id="updatenameLbl"></input>
+        <b>LastName:</b> <input type="text" id="insertlastNameLbl"></input>
     </div>
     <div>
-        <b>LastName:</b> <input type="text" id="updatelastNameLbl"></input>
+        <b>Address:</b> <input type="text" id="insertaddressLbl"></input>
     </div>
-    <div>
-        <b>Address:</b> <input type="text" id="updateaddressLbl"></input>
-    </div>
-<input type="button" value="Update Record" id="updateBtn" onclick="updatePerson()"></input>
+<input type="button" value="Insert Record" id="saveBtn" onclick="savePerson()"></input>
 </form>
 </body>
 </html>
